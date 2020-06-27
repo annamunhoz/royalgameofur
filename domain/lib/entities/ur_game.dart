@@ -3,7 +3,7 @@ import 'ur_board.dart';
 class UrGame {
   UrGame() {
     urBoard = UrBoard();
-    movePiece = {1: urBoard.movePlayerOnePiece, 2: urBoard.movePlayerTwoPiece};
+    _movePiece = {1: urBoard.movePlayerOnePiece, 2: urBoard.movePlayerTwoPiece};
     hasPiece = {1: urBoard.hasPlayerOnePiece, 2: urBoard.hasPlayerTwoPiece};
     track = {
       1: urBoard.playerOneTrack,
@@ -13,21 +13,21 @@ class UrGame {
 
   bool playerTwoHuman;
   UrBoard urBoard;
-  Map<int, Function> movePiece;
+  Map<int, Function> _movePiece;
   Map<int, Function> hasPiece;
   Map<int, List<String>> track;
 
-  List<String> getAvailableMoves(int player, int diceRoll) {
+  List<List<String>> getAvailableMoves(int player, int diceRoll) {
     if (diceRoll == 0) {
       return [];
     }
 
-    final possibleMoves = <String>[];
+    final possibleMoves = <List<String>>[];
 
     for (var i = 0; i < track.length; i++) {
       if (hasPiece[player](track[player][i]) &&
           canMovePiece(player, i, i + diceRoll)) {
-        possibleMoves.add(track[player][i]);
+        possibleMoves.add([track[player][i], track[player][i + diceRoll]]);
       }
     }
 
@@ -52,4 +52,8 @@ class UrGame {
   }
 
   int getOpponent(int player) => player == 1 ? 2 : 1;
+
+  void movePiece(int player, String tileFrom, String tileDestiny) {
+    _movePiece[player](tileFrom, tileDestiny);
+  }
 }
