@@ -1,3 +1,5 @@
+import 'package:domain/models/tile.dart';
+
 import 'ur_board.dart';
 
 class UrGame {
@@ -12,6 +14,7 @@ class UrGame {
   Map<int, Function> _movePiece;
   Map<int, Function> hasPiece;
   Map<int, List<String>> track;
+  bool finished = false;
 
   List<List<String>> getAvailableMoves(int player, int diceRoll) {
     if (diceRoll == 0) {
@@ -24,6 +27,7 @@ class UrGame {
       if (hasPiece[player](track[player][i]) &&
           canMovePiece(player, i, i + diceRoll)) {
         possibleMoves.add([track[player][i], track[player][i + diceRoll]]);
+        urBoard.boardMap[track[player][i]].canMove = true;
       }
     }
 
@@ -49,7 +53,22 @@ class UrGame {
 
   int getOpponent(int player) => player == 1 ? 2 : 1;
 
-  void movePiece(int player, String tileFrom, String tileDestiny) {
-    _movePiece[player](tileFrom, tileDestiny);
+  // TODO: update method
+  void movePiece(int trackIndex) {
+//    _movePiece[player](tileFrom, tileDestiny);
   }
+
+  Map<String, Tile> getBoardMap() => urBoard.boardMap;
+
+  // TODO: create method
+  int rollDice() => 4;
+
+  // TODO: update method
+  bool hasRolledDice() => true;
+
+  // TODO: get current player
+  int getCurrentPlayer() => 1;
+
+  // TODO: create method
+  int getWinnerPlayer() => 1;
 }
