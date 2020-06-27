@@ -7,10 +7,6 @@ class UrBoard {
 
   List<String> playerOneTrack;
   List<String> playerTwoTrack;
-  int playerOneAvailablePieces;
-  int playerTwoAvailablePieces;
-  int playerOneFinishedPieces;
-  int playerTwoFinishedPieces;
   Map<String, Tile> boardMap;
 
   void initializeBoard() {
@@ -51,11 +47,6 @@ class UrBoard {
       '22'
     ];
 
-    playerOneAvailablePieces = 5;
-    playerTwoAvailablePieces = 5;
-    playerOneFinishedPieces = 0;
-    playerTwoFinishedPieces = 0;
-
     boardMap = {
       '00': Tile(),
       '01': Tile(),
@@ -84,13 +75,17 @@ class UrBoard {
     };
   }
 
-  void movePlayerOnePiece(String tileFrom, String tileTo) {
+  void movePlayerOnePiece(String tileFrom, String tileDestiny) {
     boardMap[tileFrom].playerOnePieces -= 1;
-    boardMap[tileTo].playerOnePieces += 1;
+    boardMap[tileDestiny].playerOnePieces += 1;
   }
 
-  void movePlayerTwoPiece(String tileFrom, String tileTo) {
+  void movePlayerTwoPiece(String tileFrom, String tileDestiny) {
     boardMap[tileFrom].playerTwoPieces -= 1;
-    boardMap[tileTo].playerTwoPieces += 1;
+    boardMap[tileDestiny].playerTwoPieces += 1;
   }
+
+  bool hasPlayerOnePiece(String tile) => boardMap[tile].playerOnePieces > 0;
+
+  bool hasPlayerTwoPiece(String tile) => boardMap[tile].playerTwoPieces > 0;
 }
