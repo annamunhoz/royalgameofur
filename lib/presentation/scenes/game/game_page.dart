@@ -1,8 +1,8 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:royalgameofur/presentation/common/app_colors.dart';
 import 'package:royalgameofur/presentation/common/player_piece.dart';
+import 'package:royalgameofur/presentation/common/player_starting_pieces.dart';
 import 'package:royalgameofur/presentation/common/tile_container.dart';
 import 'package:royalgameofur/presentation/scenes/game/game_states.dart';
 import 'package:domain/models/tile.dart';
@@ -164,9 +164,7 @@ class _TileUI extends StatelessWidget {
       ? GestureDetector(
           onTap: () => bloc.onMovePiece.add(tile.trackIndex),
           child: TileContainer(
-            color: tile.isSpecial
-                ? AppColors.lightTileGameColor
-                : AppColors.darkTileGameColor,
+            isSpecial: tile.isSpecial,
             child: tile.playerOnePieces != 0 || tile.playerTwoPieces != 0
                 ? PlayerPiece(
                     player: tile.playerOnePieces == 1 ? 1 : 2,
@@ -175,9 +173,7 @@ class _TileUI extends StatelessWidget {
           ),
         )
       : TileContainer(
-          color: tile.isSpecial
-              ? AppColors.lightTileGameColor
-              : AppColors.darkTileGameColor,
+          isSpecial: tile.isSpecial,
           child: tile.playerOnePieces != 0 || tile.playerTwoPieces != 0
               ? PlayerPiece(
                   player: tile.playerOnePieces == 1 ? 1 : 2,
@@ -203,16 +199,30 @@ class _TilePoints extends StatelessWidget {
         : tile.playerTwoPieces.toString();
 
     return TileContainer(
+      background: false,
       child: Center(
-        child: Text(
-          playerPoints,
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
+          child: Column(
+        children: <Widget>[
+          Text(
+            playerPoints,
+            style: TextStyle(
+              fontFamily: 'VCR_OSD',
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 36,
+            ),
           ),
-        ),
-      ),
+          Text(
+            'P${player} POINTS',
+            style: TextStyle(
+              fontFamily: 'VCR_OSD',
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+        ],
+      )),
     );
   }
 }
@@ -234,7 +244,8 @@ class _InitialTile extends StatelessWidget {
         : tile.playerTwoPieces.toString();
 
     return TileContainer(
-      child: PlayerPiece(
+      background: false,
+      child: PlayerStartingPieces(
         quantityPiece: playerPieces,
         player: player,
       ),

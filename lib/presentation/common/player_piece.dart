@@ -26,15 +26,6 @@ class PlayerPiece extends StatelessWidget {
             color: playerColor,
             shape: BoxShape.circle,
           ),
-          child: Center(
-            child: Text(
-              quantityPiece ?? '',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-          ),
         ),
       ],
     );
