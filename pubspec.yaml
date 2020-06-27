@@ -26,6 +26,8 @@ dependencies:
   domain:
     path: ./domain
   url_launcher: ^5.4.11
+  provider: ^4.1.3
+  rxdart: ^0.24.1
 
 
 

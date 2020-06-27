@@ -1,18 +1,14 @@
 import 'ur_board.dart';
 
 class UrGame {
-  UrGame() {
-    urBoard = UrBoard();
+  UrGame(this.urBoard) {
     _movePiece = {1: urBoard.movePlayerOnePiece, 2: urBoard.movePlayerTwoPiece};
     hasPiece = {1: urBoard.hasPlayerOnePiece, 2: urBoard.hasPlayerTwoPiece};
-    track = {
-      1: urBoard.playerOneTrack,
-      2: urBoard.playerTwoTrack,
-    };
+    track = {1: urBoard.playerOneTrack, 2: urBoard.playerTwoTrack};
   }
 
+  final UrBoard urBoard;
   bool playerTwoHuman;
-  UrBoard urBoard;
   Map<int, Function> _movePiece;
   Map<int, Function> hasPiece;
   Map<int, List<String>> track;

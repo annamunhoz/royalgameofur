@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:royalgameofur/app_provider.dart';
+import 'package:royalgameofur/presentation/scenes/game/game_bloc.dart';
 import 'package:royalgameofur/presentation/scenes/game/game_page.dart';
 import 'package:royalgameofur/presentation/home_page.dart';
 import 'package:royalgameofur/presentation/scenes/game_rules/game_rules_page.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    AppProvider(child: MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +21,9 @@ class MyApp extends StatelessWidget {
         ),
         home: HomePage(),
         routes: {
-          GamePage.routeName: (context) => GamePage(),
+          GamePage.routeName: (context) => Consumer<GameBloc>(
+                builder: (context, gameBloc, _) => GamePage(gameBloc),
+              ),
           GameRulesPage.routeName: (context) => GameRulesPage(),
         },
       );

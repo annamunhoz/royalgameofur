@@ -9,9 +9,9 @@ import 'package:royalgameofur/presentation/common/tile_container.dart';
 import 'game_bloc.dart';
 
 class GamePage extends StatefulWidget {
-//  GamePage(this.bloc) : assert(bloc != null);
-//
-//  final GameBloc bloc;
+  const GamePage(this.bloc) : assert(bloc != null);
+
+  final GameBloc bloc;
 
   static const routeName = '/game';
 
