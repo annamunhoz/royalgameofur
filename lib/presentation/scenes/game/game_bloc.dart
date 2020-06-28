@@ -42,8 +42,8 @@ class GameBloc {
       } else {
         yield Game(
           boardMap: urGame.getBoardMap(),
-          currentPlayer: urGame.getCurrentPlayer(),
-          hasRolledDice: urGame.hasRolledDice(),
+          currentPlayer: urGame.currentPlayer,
+          hasRolledDice: urGame.hasRolledDice,
         );
       }
     } catch (e) {
