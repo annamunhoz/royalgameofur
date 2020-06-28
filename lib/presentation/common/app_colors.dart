@@ -9,5 +9,5 @@ class AppColors {
 
   static const playerOneColor = Color(0xFF1bf286);
 
-  static const playerTwoColor = Color(0xFF36ffff);
+  static const playerTwoColor = Color(0xFF1ccef2);
 }
