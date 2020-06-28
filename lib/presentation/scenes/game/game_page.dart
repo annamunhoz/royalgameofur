@@ -51,32 +51,41 @@ class _GamePageState extends State<GamePage> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 _TileUI(
-                                    snapshotData.boardMap['00'], widget.bloc),
+                                    snapshotData.urGame.urBoard.boardMap['00'],
+                                    widget.bloc),
                                 _TileUI(
-                                    snapshotData.boardMap['01'], widget.bloc),
+                                    snapshotData.urGame.urBoard.boardMap['01'],
+                                    widget.bloc),
                                 _TileUI(
-                                    snapshotData.boardMap['02'], widget.bloc),
+                                    snapshotData.urGame.urBoard.boardMap['02'],
+                                    widget.bloc),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 _TileUI(
-                                    snapshotData.boardMap['10'], widget.bloc),
+                                    snapshotData.urGame.urBoard.boardMap['10'],
+                                    widget.bloc),
                                 _TileUI(
-                                    snapshotData.boardMap['11'], widget.bloc),
+                                    snapshotData.urGame.urBoard.boardMap['11'],
+                                    widget.bloc),
                                 _TileUI(
-                                    snapshotData.boardMap['12'], widget.bloc),
+                                    snapshotData.urGame.urBoard.boardMap['12'],
+                                    widget.bloc),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
-                                _TilePoints(snapshotData.boardMap['20'],
+                                _TilePoints(
+                                    snapshotData.urGame.urBoard.boardMap['20'],
                                     player: 1),
                                 _TileUI(
-                                    snapshotData.boardMap['21'], widget.bloc),
-                                _TilePoints(snapshotData.boardMap['22'],
+                                    snapshotData.urGame.urBoard.boardMap['21'],
+                                    widget.bloc),
+                                _TilePoints(
+                                    snapshotData.urGame.urBoard.boardMap['22'],
                                     player: 2),
                               ],
                             ),
@@ -84,12 +93,15 @@ class _GamePageState extends State<GamePage> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 _InitialTile(
-                                    snapshotData.boardMap['30'], widget.bloc,
+                                    snapshotData.urGame.urBoard.boardMap['30'],
+                                    widget.bloc,
                                     player: 1),
                                 _TileUI(
-                                    snapshotData.boardMap['31'], widget.bloc),
+                                    snapshotData.urGame.urBoard.boardMap['31'],
+                                    widget.bloc),
                                 _InitialTile(
-                                    snapshotData.boardMap['32'], widget.bloc,
+                                    snapshotData.urGame.urBoard.boardMap['32'],
+                                    widget.bloc,
                                     player: 2),
                               ],
                             ),
@@ -97,44 +109,56 @@ class _GamePageState extends State<GamePage> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 _TileUI(
-                                    snapshotData.boardMap['40'], widget.bloc),
+                                    snapshotData.urGame.urBoard.boardMap['40'],
+                                    widget.bloc),
                                 _TileUI(
-                                    snapshotData.boardMap['41'], widget.bloc),
+                                    snapshotData.urGame.urBoard.boardMap['41'],
+                                    widget.bloc),
                                 _TileUI(
-                                    snapshotData.boardMap['42'], widget.bloc),
+                                    snapshotData.urGame.urBoard.boardMap['42'],
+                                    widget.bloc),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 _TileUI(
-                                    snapshotData.boardMap['50'], widget.bloc),
+                                    snapshotData.urGame.urBoard.boardMap['50'],
+                                    widget.bloc),
                                 _TileUI(
-                                    snapshotData.boardMap['51'], widget.bloc),
+                                    snapshotData.urGame.urBoard.boardMap['51'],
+                                    widget.bloc),
                                 _TileUI(
-                                    snapshotData.boardMap['52'], widget.bloc),
+                                    snapshotData.urGame.urBoard.boardMap['52'],
+                                    widget.bloc),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 _TileUI(
-                                    snapshotData.boardMap['60'], widget.bloc),
+                                    snapshotData.urGame.urBoard.boardMap['60'],
+                                    widget.bloc),
                                 _TileUI(
-                                    snapshotData.boardMap['61'], widget.bloc),
+                                    snapshotData.urGame.urBoard.boardMap['61'],
+                                    widget.bloc),
                                 _TileUI(
-                                    snapshotData.boardMap['62'], widget.bloc),
+                                    snapshotData.urGame.urBoard.boardMap['62'],
+                                    widget.bloc),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 _TileUI(
-                                    snapshotData.boardMap['70'], widget.bloc),
+                                    snapshotData.urGame.urBoard.boardMap['70'],
+                                    widget.bloc),
                                 _TileUI(
-                                    snapshotData.boardMap['71'], widget.bloc),
+                                    snapshotData.urGame.urBoard.boardMap['71'],
+                                    widget.bloc),
                                 _TileUI(
-                                    snapshotData.boardMap['72'], widget.bloc),
+                                    snapshotData.urGame.urBoard.boardMap['72'],
+                                    widget.bloc),
                               ],
                             ),
                           ],

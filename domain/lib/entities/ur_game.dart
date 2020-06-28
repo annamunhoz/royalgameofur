@@ -27,6 +27,15 @@ class UrGame {
   bool hasRolledDice;
   bool canPlayerMove;
 
+  void newGame(bool playerTwoIsHuman) {
+    urBoard.initializeBoard();
+    currentPlayer = 1;
+    finished = false;
+    hasRolledDice = false;
+    playerTwoHuman = playerTwoIsHuman;
+    canPlayerMove = true;
+  }
+
   List<List<String>> getAvailableMoves() {
     if (rolledNumber == 0) {
       canPlayerMove = false;
@@ -115,9 +124,10 @@ class UrGame {
     final moves = getAvailableMoves();
 
     if (moves.length > 0) {
-      final tile = urBoard.boardMap[moves[Random().nextInt(moves.length)][0]];
+      final move = moves[Random().nextInt(moves.length)];
+      final tile = urBoard.boardMap[move[0]];
       movePiece(tile.trackIndex);
-      if (hasRolledDice == false) {
+      if (urBoard.boardMap[move[1]].isSpecial) {
         playAITurn();
       }
     } else {

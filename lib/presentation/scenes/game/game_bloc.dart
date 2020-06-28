@@ -50,6 +50,7 @@ class GameBloc {
       } else {
         yield Game(
           boardMap: urGame.getBoardMap(),
+          urGame: urGame,
           currentPlayer: urGame.currentPlayer,
           hasRolledDice: urGame.hasRolledDice,
           rolledNumber: urGame.rolledNumber,
@@ -69,6 +70,7 @@ class GameBloc {
     } else {
       yield Game(
         boardMap: urGame.getBoardMap(),
+        urGame: urGame,
         currentPlayer: urGame.currentPlayer,
         hasRolledDice: urGame.hasRolledDice,
         rolledNumber: urGame.rolledNumber,
@@ -85,6 +87,7 @@ class GameBloc {
     } else {
       yield Game(
         boardMap: urGame.getBoardMap(),
+        urGame: urGame,
         currentPlayer: urGame.currentPlayer,
         hasRolledDice: urGame.hasRolledDice,
         rolledNumber: urGame.rolledNumber,
@@ -101,6 +104,7 @@ class GameBloc {
     } else {
       yield Game(
         boardMap: urGame.getBoardMap(),
+        urGame: urGame,
         currentPlayer: urGame.currentPlayer,
         hasRolledDice: urGame.hasRolledDice,
         rolledNumber: urGame.rolledNumber,
