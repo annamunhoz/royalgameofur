@@ -9,7 +9,7 @@ class PlayerStartingPieces extends StatelessWidget {
   }) : assert(player != null && player < 3 && player > 0);
 
   final int player;
-  final String quantityPiece;
+  final int quantityPiece;
 
   @override
   Widget build(BuildContext context) {

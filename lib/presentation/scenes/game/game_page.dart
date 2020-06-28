@@ -83,11 +83,11 @@ class _GamePageState extends State<GamePage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
-                                _InitialTile(snapshotData.boardMap['30'],
+                                _InitialTile(snapshotData.boardMap['30'], widget.bloc,
                                     player: 1),
                                 _TileUI(
                                     snapshotData.boardMap['31'], widget.bloc),
-                                _InitialTile(snapshotData.boardMap['32'],
+                                _InitialTile(snapshotData.boardMap['32'], widget.bloc,
                                     player: 2),
                               ],
                             ),
@@ -138,7 +138,7 @@ class _GamePageState extends State<GamePage> {
                           ],
                         )),
                     Container(
-                      color: Colors.white,
+                      color: AppColors.backgroundGameColor,
                       height: dataDevice.size.height * 0.10,
                     ),
                   ],
@@ -229,26 +229,33 @@ class _TilePoints extends StatelessWidget {
 
 class _InitialTile extends StatelessWidget {
   const _InitialTile(
-    this.tile, {
+    this.tile, this.bloc, {
     @required this.player,
   })  : assert(tile != null),
         assert(player != null && player < 3 && player > 0);
 
   final Tile tile;
   final int player;
+  final GameBloc bloc;
 
   @override
   Widget build(BuildContext context) {
     final playerPieces = player == 1
-        ? tile.playerOnePieces.toString()
-        : tile.playerTwoPieces.toString();
+        ? tile.playerOnePieces
+        : tile.playerTwoPieces;
 
-    return TileContainer(
+    var tileContainer = TileContainer(
       background: false,
       child: PlayerStartingPieces(
         quantityPiece: playerPieces,
         player: player,
       ),
     );
+
+    return tile.canMove
+      ? GestureDetector(
+        onTap: () => bloc.onMovePiece.add(tile.trackIndex),
+        child: tileContainer
+      ) : tileContainer;
   }
 }
