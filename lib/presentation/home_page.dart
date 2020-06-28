@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:royalgameofur/presentation/common/app_colors.dart';
 import 'package:royalgameofur/presentation/scenes/game_rules/game_rules_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -37,7 +38,7 @@ class HomePage extends StatelessWidget {
               ),
               const Spacer(),
               const Text(
-                'Develop during the Flutter Hackathon 2020.',
+                'Developed during the Flutter Hackathon 2020.',
                 textAlign: TextAlign.center,
               ),
               const Padding(padding: EdgeInsets.all(8)),
@@ -45,15 +46,26 @@ class HomePage extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: Wrap(
-                      // TODO: Find a better way to show the link (está muito afastado)
                       children: <Widget>[
                         FlatButton(
                           onPressed: _launchAnnaURL,
-                          child: const Text('Contact Anna Munhoz'),
+                          textColor: AppColors.playerOneColor,
+                          child: Text(
+                            'Contact Anna Munhoz',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
                         ),
                         FlatButton(
                           onPressed: _launchViniciusURL,
-                          child: const Text('Contact Vinicius Munhoz'),
+                          textColor: AppColors.playerTwoColor,
+                          child: Text(
+                            'Contact Vinicius Munhoz',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -64,6 +76,7 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
+        backgroundColor: AppColors.backgroundGameColor,
       );
 
   void _launchViniciusURL() async {
