@@ -163,34 +163,45 @@ class _RollDice extends StatelessWidget {
         ? AppColors.playerOneColor
         : AppColors.playerTwoColor;
 
+    final rolledNumberMessage = snapshotData.canPlayerMove
+        ? '- ${snapshotData.rolledNumber} -'
+        : '${snapshotData.rolledNumber}: CAN\'T MOVE\n- PASS TURN -';
+
+    final rolledNumberText = Text(
+      rolledNumberMessage,
+      style: TextStyle(
+        fontFamily: 'VCR_OSD',
+        color: _textColor,
+        fontWeight: FontWeight.bold,
+        fontSize: 36,
+      ),
+    );
+
+    final rollDiceText = Text(
+      'ROLL DICE',
+      style: TextStyle(
+        fontFamily: 'VCR_OSD',
+        color: _textColor,
+        fontWeight: FontWeight.bold,
+        fontSize: 36,
+      ),
+    );
+
     return Container(
       color: AppColors.backgroundGameColor,
       height: dataDevice.size.height * 0.10,
       child: snapshotData.hasRolledDice
           ? Center(
-              child: Text(
-                '- ${snapshotData.rolledNumber} -',
-                style: TextStyle(
-                  fontFamily: 'VCR_OSD',
-                  color: _textColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 36,
-                ),
+              child: GestureDetector(
+                onTap: snapshotData.canPlayerMove
+                    ? () {}
+                    : () => bloc.onPassTurn.add(null),
+                child: Center(child: rolledNumberText),
               ),
             )
           : GestureDetector(
               onTap: () => bloc.onRollDice.add(null),
-              child: Center(
-                child: Text(
-                  'ROLL DICE',
-                  style: TextStyle(
-                    fontFamily: 'VCR_OSD',
-                    color: _textColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 36,
-                  ),
-                ),
-              ),
+              child: Center(child: rollDiceText),
             ),
     );
   }

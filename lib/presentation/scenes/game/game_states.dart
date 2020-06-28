@@ -9,12 +9,14 @@ class Game implements GameStates {
     @required this.currentPlayer,
     @required this.hasRolledDice,
     this.rolledNumber,
+    this.canPlayerMove,
   });
 
   final Map<String, Tile> boardMap;
   final int currentPlayer;
   final bool hasRolledDice;
   final int rolledNumber;
+  final bool canPlayerMove;
 }
 
 class GameOver implements GameStates {

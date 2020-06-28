@@ -13,6 +13,7 @@ class UrGame {
     finished = false;
     hasRolledDice = false;
     playerTwoHuman = true;
+    canPlayerMove = true;
   }
 
   final UrBoard urBoard;
@@ -24,10 +25,11 @@ class UrGame {
   int rolledNumber;
   bool finished;
   bool hasRolledDice;
+  bool canPlayerMove;
 
   List<List<String>> getAvailableMoves() {
     if (rolledNumber == 0) {
-      //nextTurn();
+      canPlayerMove = false;
       return [];
     }
 
@@ -40,6 +42,12 @@ class UrGame {
             [track[currentPlayer][i], track[currentPlayer][i + rolledNumber]]);
         urBoard.boardMap[track[currentPlayer][i]].canMove = true;
       }
+    }
+
+    if (possibleMoves.length > 0) {
+      canPlayerMove = true;
+    } else {
+      canPlayerMove = false;
     }
 
     return possibleMoves;
@@ -94,7 +102,9 @@ class UrGame {
     hasRolledDice = false;
     disableAllPossibleMoves();
 
-    if (currentPlayer == 2 && !playerTwoHuman) {
+    endGameIfPossible();
+
+    if (currentPlayer == 2 && !playerTwoHuman && !finished) {
       playAITurn();
     }
   }
@@ -130,6 +140,15 @@ class UrGame {
       return 1;
     } else {
       return 2;
+    }
+  }
+
+  void endGameIfPossible() {
+    if (urBoard.boardMap['20'].playerOnePieces == 5) {
+      finished = true;
+    }
+    if (urBoard.boardMap['22'].playerTwoPieces == 5) {
+      finished = true;
     }
   }
 }
