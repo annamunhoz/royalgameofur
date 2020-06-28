@@ -6,23 +6,27 @@ class TileContainer extends StatelessWidget {
     this.isSpecial = false,
     this.child,
     this.background = true,
+    this.canMove = false,
   });
 
   final bool isSpecial;
   final Widget child;
   final bool background;
+  final bool canMove;
 
   @override
   Widget build(BuildContext context) {
     final dataDevice = MediaQuery.of(context);
     BoxDecoration decoration = null;
 
+    final specialName = isSpecial ? '_special' : '';
+    final canMoveName = canMove ? '_canMove' : '';
+    final tileImageName = 'assets/images/tile${specialName}${canMoveName}.png';
+
     if (background) {
       decoration = BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(isSpecial
-                  ? 'assets/images/tile_special.png'
-                  : 'assets/images/tile.png'),
+              image: AssetImage(tileImageName),
               fit: BoxFit.fill));
     }
 
