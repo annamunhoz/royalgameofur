@@ -60,6 +60,7 @@ class MyApp extends StatelessWidget {
                   final playerTwoIsHuman =
                       ModalRoute.of(context).settings.arguments;
                   gameBloc.urGame.newGame(playerTwoIsHuman);
+                  gameBloc.onNewGame.add(null);
                   return GamePage(gameBloc);
                 },
               ),

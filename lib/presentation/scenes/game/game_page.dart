@@ -183,11 +183,11 @@ class _RollDice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dataDevice = MediaQuery.of(context);
-    final _textColor = snapshotData.currentPlayer == 1
+    final _textColor = snapshotData.urGame.currentPlayer == 1
         ? AppColors.playerOneColor
         : AppColors.playerTwoColor;
 
-    final rolledNumberMessage = snapshotData.canPlayerMove
+    final rolledNumberMessage = snapshotData.urGame.canPlayerMove
         ? '- ${snapshotData.rolledNumber} -'
         : '${snapshotData.rolledNumber}: CAN\'T MOVE\n- PASS TURN -';
 
@@ -217,7 +217,7 @@ class _RollDice extends StatelessWidget {
       child: snapshotData.hasRolledDice
           ? Center(
               child: GestureDetector(
-                onTap: snapshotData.canPlayerMove
+                onTap: snapshotData.urGame.canPlayerMove
                     ? () {}
                     : () => bloc.onPassTurn.add(null),
                 child: Center(child: rolledNumberText),
@@ -240,7 +240,6 @@ class _TileUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) => tile.canMove
       ? GestureDetector(
-          // TODO: add canMove to show different view
           onTap: () => bloc.onMovePiece.add(tile.trackIndex),
           child: TileContainer(
             isSpecial: tile.isSpecial,

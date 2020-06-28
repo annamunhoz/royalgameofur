@@ -13,18 +13,19 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Royal Game of Ur'),
-        ),
         body: Center(
           child: Column(
             children: <Widget>[
-              const Padding(padding: EdgeInsets.all(18)),
+              const Padding(padding: EdgeInsets.all(20)),
+              Container(
+                  height: 150,
+                  child: Image(image: AssetImage('assets/images/logo.gif'))),
+              const Padding(padding: EdgeInsets.all(5)),
               const Text(
                 'The Royal Game of Ur is the oldest boardgame ever.',
                 textAlign: TextAlign.center,
               ),
-              const Padding(padding: EdgeInsets.all(18)),
+              const Padding(padding: EdgeInsets.all(15)),
               RaisedButton(
                 onPressed: () =>
                     Navigator.of(context).pushNamed(GameRulesPage.routeName),

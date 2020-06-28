@@ -55,7 +55,6 @@ class _GameRulesPageState extends State<GameRulesPage> {
     );
   }
 
-  // TODO: update images
   static final List<String> imgList = [
     'assets/images/tutorial1.png',
     'assets/images/tutorial2.png',

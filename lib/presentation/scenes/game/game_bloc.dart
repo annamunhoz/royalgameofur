@@ -24,6 +24,11 @@ class GameBloc {
         Rx.merge([
           _onPassTurnController.stream,
         ]).flatMap(_passTurn).listen(_onNewStateController.add),
+      )
+      ..add(
+        Rx.merge([
+          _onNewGameController.stream,
+        ]).flatMap(_newGame).listen(_onNewStateController.add),
       );
   }
 
@@ -43,6 +48,9 @@ class GameBloc {
   final _onPassTurnController = BehaviorSubject<int>();
   Sink<int> get onPassTurn => _onPassTurnController.sink;
 
+  final _onNewGameController = BehaviorSubject<int>();
+  Sink<int> get onNewGame => _onNewGameController.sink;
+
   Stream<GameStates> _gameState() async* {
     try {
       if (urGame.finished) {
@@ -51,10 +59,8 @@ class GameBloc {
         yield Game(
           boardMap: urGame.getBoardMap(),
           urGame: urGame,
-          currentPlayer: urGame.currentPlayer,
           hasRolledDice: urGame.hasRolledDice,
           rolledNumber: urGame.rolledNumber,
-          canPlayerMove: urGame.canPlayerMove,
         );
       }
     } catch (e) {
@@ -71,10 +77,8 @@ class GameBloc {
       yield Game(
         boardMap: urGame.getBoardMap(),
         urGame: urGame,
-        currentPlayer: urGame.currentPlayer,
         hasRolledDice: urGame.hasRolledDice,
         rolledNumber: urGame.rolledNumber,
-        canPlayerMove: urGame.canPlayerMove,
       );
     }
   }
@@ -88,10 +92,8 @@ class GameBloc {
       yield Game(
         boardMap: urGame.getBoardMap(),
         urGame: urGame,
-        currentPlayer: urGame.currentPlayer,
         hasRolledDice: urGame.hasRolledDice,
         rolledNumber: urGame.rolledNumber,
-        canPlayerMove: urGame.canPlayerMove,
       );
     }
   }
@@ -105,10 +107,21 @@ class GameBloc {
       yield Game(
         boardMap: urGame.getBoardMap(),
         urGame: urGame,
-        currentPlayer: urGame.currentPlayer,
         hasRolledDice: urGame.hasRolledDice,
         rolledNumber: urGame.rolledNumber,
-        canPlayerMove: urGame.canPlayerMove,
+      );
+    }
+  }
+
+  Stream<GameStates> _newGame(_) async* {
+    if (urGame.finished) {
+      yield GameOver(urGame.getWinnerPlayer());
+    } else {
+      yield Game(
+        boardMap: urGame.getBoardMap(),
+        urGame: urGame,
+        hasRolledDice: urGame.hasRolledDice,
+        rolledNumber: urGame.rolledNumber,
       );
     }
   }
@@ -118,5 +131,6 @@ class GameBloc {
     _onMovePieceController.close();
     _onRollDiceController.close();
     _onPassTurnController.close();
+    _onNewGameController.close();
   }
 }
