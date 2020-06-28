@@ -78,11 +78,21 @@ class UrBoard {
   void movePlayerOnePiece(String tileFrom, String tileDestiny) {
     boardMap[tileFrom].playerOnePieces -= 1;
     boardMap[tileDestiny].playerOnePieces += 1;
+
+    if (boardMap[tileDestiny].playerTwoPieces > 0) {
+      boardMap[tileDestiny].playerTwoPieces -= 1;
+      boardMap['32'].playerTwoPieces += 1;
+    }
   }
 
   void movePlayerTwoPiece(String tileFrom, String tileDestiny) {
     boardMap[tileFrom].playerTwoPieces -= 1;
     boardMap[tileDestiny].playerTwoPieces += 1;
+
+    if (boardMap[tileDestiny].playerOnePieces > 0) {
+      boardMap[tileDestiny].playerOnePieces -= 1;
+      boardMap['30'].playerOnePieces += 1;
+    }
   }
 
   bool hasPlayerOnePiece(String tile) => boardMap[tile].playerOnePieces > 0;

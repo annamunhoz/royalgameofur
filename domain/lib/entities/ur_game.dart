@@ -1,5 +1,7 @@
-import 'package:domain/models/tile.dart';
 import 'dart:math';
+
+import 'package:domain/models/tile.dart';
+
 import 'ur_board.dart';
 
 class UrGame {
@@ -10,7 +12,7 @@ class UrGame {
     currentPlayer = 1;
     finished = false;
     hasRolledDice = false;
-    playerTwoHuman = false;
+    playerTwoHuman = true;
   }
 
   final UrBoard urBoard;
@@ -25,15 +27,17 @@ class UrGame {
 
   List<List<String>> getAvailableMoves() {
     if (rolledNumber == 0) {
+      //nextTurn();
       return [];
     }
 
     final possibleMoves = <List<String>>[];
 
-    for (var i = 0; i < track.length; i++) {
+    for (var i = 0; i < track[currentPlayer].length; i++) {
       if (hasPiece[currentPlayer](track[currentPlayer][i]) &&
           canMovePiece(currentPlayer, i, i + rolledNumber)) {
-        possibleMoves.add([track[currentPlayer][i], track[currentPlayer][i + rolledNumber]]);
+        possibleMoves.add(
+            [track[currentPlayer][i], track[currentPlayer][i + rolledNumber]]);
         urBoard.boardMap[track[currentPlayer][i]].canMove = true;
       }
     }
@@ -41,12 +45,20 @@ class UrGame {
     return possibleMoves;
   }
 
+  void disableAllPossibleMoves() {
+    urBoard.boardMap.forEach((k, v) => disableTileMove(k));
+  }
+
+  void disableTileMove(String tile) {
+    urBoard.boardMap[tile].canMove = false;
+  }
+
   bool canMovePiece(int player, int indexFrom, int indexDestiny) {
-    if (indexDestiny > track.length) {
+    if (indexDestiny > track[player].length - 1) {
       return false;
     }
 
-    if (hasPiece[player](track[player][indexDestiny])) {
+    if (hasPiece[player](track[player][indexDestiny]) && indexDestiny != 15) {
       return false;
     }
 
@@ -65,7 +77,7 @@ class UrGame {
     var destinyTileName = track[currentPlayer][trackIndex + rolledNumber];
     _movePiece[currentPlayer](fromTileName, destinyTileName);
 
-    if(urBoard.boardMap[destinyTileName].isSpecial) {
+    if (urBoard.boardMap[destinyTileName].isSpecial) {
       playAgain();
     } else {
       nextTurn();
@@ -74,25 +86,28 @@ class UrGame {
 
   void playAgain() {
     hasRolledDice = false;
+    disableAllPossibleMoves();
   }
 
   void nextTurn() {
     currentPlayer = getOpponent();
     hasRolledDice = false;
+    disableAllPossibleMoves();
 
-    if(currentPlayer == 2 && !playerTwoHuman) {
+    if (currentPlayer == 2 && !playerTwoHuman) {
       playAITurn();
     }
   }
 
   void playAITurn() {
+    disableAllPossibleMoves();
     rollDice();
     final moves = getAvailableMoves();
 
-    if(moves.length > 0) {
+    if (moves.length > 0) {
       final tile = urBoard.boardMap[moves[Random().nextInt(moves.length)][0]];
       movePiece(tile.trackIndex);
-      if(hasRolledDice == false) {
+      if (hasRolledDice == false) {
         playAITurn();
       }
     } else {
@@ -104,13 +119,14 @@ class UrGame {
 
   int rollDice() {
     final r = Random();
-    rolledNumber = r.nextInt(1) + r.nextInt(1) + r.nextInt(1) + r.nextInt(1);
+    rolledNumber = r.nextInt(2) + r.nextInt(2) + r.nextInt(2) + r.nextInt(2);
     hasRolledDice = true;
+    getAvailableMoves();
     return rolledNumber;
   }
 
   int getWinnerPlayer() {
-    if(urBoard.boardMap['20'].playerOnePieces == 5) {
+    if (urBoard.boardMap['20'].playerOnePieces == 5) {
       return 1;
     } else {
       return 2;
