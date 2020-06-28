@@ -1,3 +1,4 @@
+import 'package:domain/models/tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:royalgameofur/presentation/common/app_colors.dart';
@@ -5,7 +6,6 @@ import 'package:royalgameofur/presentation/common/player_piece.dart';
 import 'package:royalgameofur/presentation/common/player_starting_pieces.dart';
 import 'package:royalgameofur/presentation/common/tile_container.dart';
 import 'package:royalgameofur/presentation/scenes/game/game_states.dart';
-import 'package:domain/models/tile.dart';
 
 import 'game_bloc.dart';
 
@@ -83,11 +83,13 @@ class _GamePageState extends State<GamePage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
-                                _InitialTile(snapshotData.boardMap['30'], widget.bloc,
+                                _InitialTile(
+                                    snapshotData.boardMap['30'], widget.bloc,
                                     player: 1),
                                 _TileUI(
                                     snapshotData.boardMap['31'], widget.bloc),
-                                _InitialTile(snapshotData.boardMap['32'], widget.bloc,
+                                _InitialTile(
+                                    snapshotData.boardMap['32'], widget.bloc,
                                     player: 2),
                               ],
                             ),
@@ -137,7 +139,7 @@ class _GamePageState extends State<GamePage> {
                             ),
                           ],
                         )),
-                    _RollDice(snapshotData.hasRolledDice, widget.bloc),
+                    _RollDice(snapshotData, widget.bloc),
                   ],
                 );
               }
@@ -149,46 +151,50 @@ class _GamePageState extends State<GamePage> {
 }
 
 class _RollDice extends StatelessWidget {
-  const _RollDice(this.hasRolledDice, this.bloc);
+  const _RollDice(this.snapshotData, this.bloc);
 
-  final bool hasRolledDice;
+  final Game snapshotData;
   final GameBloc bloc;
 
   @override
   Widget build(BuildContext context) {
     final dataDevice = MediaQuery.of(context);
+    final _textColor = snapshotData.currentPlayer == 1
+        ? AppColors.playerOneColor
+        : AppColors.playerTwoColor;
 
     return Container(
-        color: AppColors.backgroundGameColor,
-        height: dataDevice.size.height * 0.10,
-        child: hasRolledDice
-            ?  Center(
-              child: Text('- 2 -',
-          style: TextStyle(
-              fontFamily: 'VCR_OSD',
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 36,
-          ),
-        ),
+      color: AppColors.backgroundGameColor,
+      height: dataDevice.size.height * 0.10,
+      child: snapshotData.hasRolledDice
+          ? Center(
+              child: Text(
+                '- ${snapshotData.rolledNumber} -',
+                style: TextStyle(
+                  fontFamily: 'VCR_OSD',
+                  color: _textColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 36,
+                ),
+              ),
             )
-            : GestureDetector(
-          onTap: () => bloc.onRollDice.add(null),
-          child: Center(
-            child: Text('ROLL DICE',
-            style: TextStyle(
-              fontFamily: 'VCR_OSD',
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 36,
+          : GestureDetector(
+              onTap: () => bloc.onRollDice.add(null),
+              child: Center(
+                child: Text(
+                  'ROLL DICE',
+                  style: TextStyle(
+                    fontFamily: 'VCR_OSD',
+                    color: _textColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 36,
+                  ),
+                ),
+              ),
             ),
-        ),
-          ),
-      ),
     );
   }
 }
-
 
 class _TileUI extends StatelessWidget {
   const _TileUI(this.tile, this.bloc) : assert(tile != null);
@@ -203,6 +209,7 @@ class _TileUI extends StatelessWidget {
           onTap: () => bloc.onMovePiece.add(tile.trackIndex),
           child: TileContainer(
             isSpecial: tile.isSpecial,
+            canMove: true,
             child: tile.playerOnePieces != 0 || tile.playerTwoPieces != 0
                 ? PlayerPiece(
                     player: tile.playerOnePieces == 1 ? 1 : 2,
@@ -267,10 +274,12 @@ class _TilePoints extends StatelessWidget {
 
 class _InitialTile extends StatelessWidget {
   const _InitialTile(
-    this.tile, this.bloc, {
+    this.tile,
+    this.bloc, {
     @required this.player,
   })  : assert(tile != null),
-        assert(player != null && player < 3 && player > 0), assert (bloc != null);
+        assert(player != null && player < 3 && player > 0),
+        assert(bloc != null);
 
   final Tile tile;
   final int player;
@@ -278,23 +287,23 @@ class _InitialTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final playerPieces = player == 1
-        ? tile.playerOnePieces
-        : tile.playerTwoPieces;
+    final playerPieces =
+        player == 1 ? tile.playerOnePieces : tile.playerTwoPieces;
 
     var tileContainer = TileContainer(
       background: false,
       child: PlayerStartingPieces(
         quantityPiece: playerPieces,
         player: player,
+        canMove: tile.canMove,
       ),
     );
 
     return tile.canMove
-      ? GestureDetector(
-        onTap: () => bloc.onMovePiece.add(tile.trackIndex),
-        child: tileContainer
-      ) : tileContainer;
+        ? GestureDetector(
+            onTap: () => bloc.onMovePiece.add(tile.trackIndex),
+            child: tileContainer)
+        : tileContainer;
   }
 }
 
