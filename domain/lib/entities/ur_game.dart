@@ -10,6 +10,7 @@ class UrGame {
     currentPlayer = 1;
     finished = false;
     hasRolledDice = false;
+    playerTwoHuman = false;
   }
 
   final UrBoard urBoard;
@@ -45,12 +46,12 @@ class UrGame {
       return false;
     }
 
-    if (hasPiece[player](track[indexDestiny])) {
+    if (hasPiece[player](track[player][indexDestiny])) {
       return false;
     }
 
-    if (urBoard.boardMap[track[indexDestiny]].isSpecial &&
-        hasPiece[getOpponent()](track[indexDestiny])) {
+    if (urBoard.boardMap[track[player][indexDestiny]].isSpecial &&
+        hasPiece[getOpponent()](track[player][indexDestiny])) {
       return false;
     }
 
@@ -89,7 +90,7 @@ class UrGame {
     final moves = getAvailableMoves();
 
     if(moves.length > 0) {
-      final tile = urBoard.boardMap[moves[Random().nextInt(moves.length)]];
+      final tile = urBoard.boardMap[moves[Random().nextInt(moves.length)][0]];
       movePiece(tile.trackIndex);
       if(hasRolledDice == false) {
         playAITurn();

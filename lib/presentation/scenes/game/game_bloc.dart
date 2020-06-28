@@ -14,12 +14,12 @@ class GameBloc {
         Rx.merge([
           _onMovePieceController.stream,
         ]).flatMap(_clickToMove).listen(_onNewStateController.add),
+      )
+      ..add(
+        Rx.merge([
+          _onRollDiceController.stream,
+        ]).flatMap(_rollDice).listen(_onNewStateController.add),
       );
-//      ..add(
-//        Rx.merge([
-//          _onRollDiceController.stream,
-//        ]).switchMap((_) => _rollDice).listen(_onNewStateController.add),
-//      );
   }
 
   final UrGame urGame;
@@ -32,8 +32,8 @@ class GameBloc {
   final _onMovePieceController = BehaviorSubject<int>();
   Sink<int> get onMovePiece => _onMovePieceController.sink;
 
-  final _onRollDiceController = BehaviorSubject<void>();
-  Sink<void> get onRollDice => _onRollDiceController.sink;
+  final _onRollDiceController = BehaviorSubject<int>();
+  Sink<int> get onRollDice => _onRollDiceController.sink;
 
   Stream<GameStates> _gameState() async* {
     try {
@@ -64,9 +64,18 @@ class GameBloc {
       );
   }}
 
-  Stream<GameStates> _rollDice() async* {
+  Stream<GameStates> _rollDice(aaa) async* {
     urGame.rollDice();
+    if (urGame.finished) {
+      yield GameOver(urGame.getWinnerPlayer());
+    } else {
+      yield Game(
+        boardMap: urGame.getBoardMap(),
+        currentPlayer: urGame.currentPlayer,
+        hasRolledDice: urGame.hasRolledDice,
+      );
   }
+}
 
   void dispose() {
     _onNewStateController.close();
@@ -75,8 +84,3 @@ class GameBloc {
   }
 }
 
-extension AddToCompositeSubscriptionExtension<T> on StreamSubscription<T> {
-  /// Adds this subscription to composite container for subscriptions.
-  void addTo(CompositeSubscription compositeSubscription) =>
-      compositeSubscription.add(this);
-}

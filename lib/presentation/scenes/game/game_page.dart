@@ -137,10 +137,7 @@ class _GamePageState extends State<GamePage> {
                             ),
                           ],
                         )),
-                    Container(
-                      color: AppColors.backgroundGameColor,
-                      height: dataDevice.size.height * 0.10,
-                    ),
+                    _RollDice(snapshotData.hasRolledDice, widget.bloc),
                   ],
                 );
               }
@@ -150,6 +147,48 @@ class _GamePageState extends State<GamePage> {
     );
   }
 }
+
+class _RollDice extends StatelessWidget {
+  const _RollDice(this.hasRolledDice, this.bloc);
+
+  final bool hasRolledDice;
+  final GameBloc bloc;
+
+  @override
+  Widget build(BuildContext context) {
+    final dataDevice = MediaQuery.of(context);
+
+    return Container(
+        color: AppColors.backgroundGameColor,
+        height: dataDevice.size.height * 0.10,
+        child: hasRolledDice
+            ?  Center(
+              child: Text('- 2 -',
+          style: TextStyle(
+              fontFamily: 'VCR_OSD',
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 36,
+          ),
+        ),
+            )
+            : GestureDetector(
+          onTap: () => bloc.onRollDice.add(null),
+          child: Center(
+            child: Text('ROLL DICE',
+            style: TextStyle(
+              fontFamily: 'VCR_OSD',
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 36,
+            ),
+        ),
+          ),
+      ),
+    );
+  }
+}
+
 
 class _TileUI extends StatelessWidget {
   const _TileUI(this.tile, this.bloc) : assert(tile != null);
@@ -255,10 +294,7 @@ class _InitialTile extends StatelessWidget {
       ? GestureDetector(
         onTap: () => bloc.onMovePiece.add(tile.trackIndex),
         child: tileContainer
-      ) : InkWell(
-        onTap: () => bloc.onMovePiece.add(tile.trackIndex),
-        child: tileContainer
-    );
+      ) : tileContainer;
   }
 }
 
