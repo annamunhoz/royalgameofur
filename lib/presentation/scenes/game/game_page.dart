@@ -37,7 +37,7 @@ class _GamePageState extends State<GamePage> {
               final snapshotData = snapshot.data;
 
               if (snapshotData is GameOver) {
-                // TODO: Game Over view
+                return _GameOver(snapshotData.winnerPlayer);
               }
               if (snapshotData is Game) {
                 return Column(
@@ -144,9 +144,7 @@ class _GamePageState extends State<GamePage> {
                   ],
                 );
               }
-              return Container(
-                color: Colors.white,
-              );
+              return Container();
             }),
       ),
     );
@@ -162,6 +160,7 @@ class _TileUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) => tile.canMove
       ? GestureDetector(
+          // TODO: add canMove to show different view
           onTap: () => bloc.onMovePiece.add(tile.trackIndex),
           child: TileContainer(
             isSpecial: tile.isSpecial,
@@ -251,4 +250,50 @@ class _InitialTile extends StatelessWidget {
       ),
     );
   }
+}
+
+class _GameOver extends StatelessWidget {
+  const _GameOver(this.winnerPlayer, {Key key}) : super(key: key);
+
+  final int winnerPlayer;
+
+  @override
+  Widget build(BuildContext context) => Container(
+        color: AppColors.backgroundGameColor,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text(
+                'The winner is \nPlayer $winnerPlayer',
+                style: TextStyle(
+                  fontFamily: 'VCR_OSD',
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const Padding(
+                padding: EdgeInsets.all(8),
+              ),
+              RaisedButton(
+                onPressed: () => Navigator.of(context).pop(),
+                color: winnerPlayer == 1
+                    ? AppColors.playerOneColor
+                    : AppColors.playerTwoColor,
+                child: Text(
+                  'Play Again',
+                  style: TextStyle(
+                    fontFamily: 'VCR_OSD',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
 }

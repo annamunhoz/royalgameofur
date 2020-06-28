@@ -12,27 +12,25 @@ class TileContainer extends StatelessWidget {
   final Widget child;
   final bool background;
 
-
-
   @override
   Widget build(BuildContext context) {
     final dataDevice = MediaQuery.of(context);
+    BoxDecoration decoration = null;
 
-    var decoration = null;
-    if(background) {
+    if (background) {
       decoration = BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(isSpecial ? 'assets/images/tile_special.png' : 'assets/images/tile.png'),
-              fit: BoxFit.fill
-          )
-      );
+              image: AssetImage(isSpecial
+                  ? 'assets/images/tile_special.png'
+                  : 'assets/images/tile.png'),
+              fit: BoxFit.fill));
     }
 
     return Container(
       height: dataDevice.size.height * 0.09375,
       width: dataDevice.size.width * 0.3,
+      decoration: decoration,
       child: child,
-      decoration: decoration
     );
   }
 }
