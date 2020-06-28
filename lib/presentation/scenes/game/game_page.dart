@@ -231,7 +231,7 @@ class _InitialTile extends StatelessWidget {
     this.tile, this.bloc, {
     @required this.player,
   })  : assert(tile != null),
-        assert(player != null && player < 3 && player > 0);
+        assert(player != null && player < 3 && player > 0), assert (bloc != null);
 
   final Tile tile;
   final int player;
@@ -255,7 +255,10 @@ class _InitialTile extends StatelessWidget {
       ? GestureDetector(
         onTap: () => bloc.onMovePiece.add(tile.trackIndex),
         child: tileContainer
-      ) : tileContainer;
+      ) : InkWell(
+        onTap: () => bloc.onMovePiece.add(tile.trackIndex),
+        child: tileContainer
+    );
   }
 }
 

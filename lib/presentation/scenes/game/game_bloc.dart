@@ -53,7 +53,16 @@ class GameBloc {
 
   Stream<GameStates> _clickToMove(trackIndex) async* {
     urGame.movePiece(trackIndex);
-  }
+
+    if (urGame.finished) {
+      yield GameOver(urGame.getWinnerPlayer());
+    } else {
+      yield Game(
+        boardMap: urGame.getBoardMap(),
+        currentPlayer: urGame.currentPlayer,
+        hasRolledDice: urGame.hasRolledDice,
+      );
+  }}
 
   Stream<GameStates> _rollDice() async* {
     urGame.rollDice();
