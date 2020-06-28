@@ -32,9 +32,15 @@ class HomePage extends StatelessWidget {
               ),
               const Padding(padding: EdgeInsets.all(8)),
               RaisedButton(
-                onPressed: () =>
-                    Navigator.of(context).pushNamed(GamePage.routeName),
-                child: const Text('Start a new Game'),
+                onPressed: () => Navigator.of(context)
+                    .pushNamed(GamePage.routeName, arguments: true),
+                child: const Text('Play against Friend'),
+              ),
+              const Padding(padding: EdgeInsets.all(8)),
+              RaisedButton(
+                onPressed: () => Navigator.of(context)
+                    .pushNamed(GamePage.routeName, arguments: false),
+                child: const Text('Play against AI'),
               ),
               const Spacer(),
               const Text(
